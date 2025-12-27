@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // --- TYPES & INTERFACES (TypeScript) ---
 interface Employee {
@@ -96,6 +96,15 @@ const App = () => {
   const [scriptUrl, setScriptUrl] = useState("");
   const [showUrlInput, setShowUrlInput] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'loading' | 'success' | 'error' | null>(null);
+
+  // --- AUTO INJECT TAILWIND (Fix for StackBlitz Preview) ---
+  useEffect(() => {
+    if (!document.querySelector('script[src*="tailwindcss"]')) {
+      const script = document.createElement('script');
+      script.src = "https://cdn.tailwindcss.com";
+      document.head.appendChild(script);
+    }
+  }, []);
 
   const getDayName = (dateStr: string) => {
     try { return new Date(dateStr).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' }); } 
