@@ -38,7 +38,7 @@ interface EditModalState {
 // --- ICONS (Inline SVG) ---
 const Icons = {
   Calendar: () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>,
-  Users: () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+  Users: () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
   Sun: () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="orange" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>,
   Cloud: () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19c0-1.7-1.3-3-3-3h-11c-1.7 0-3 1.3-3 3s1.3 3 3 3h14c1.7 0 3-1.3 3-3z"/><path d="M17.5 19c1.4-1.4 1.6-3.7.4-5.2A5 5 0 0 0 8.1 12 4.5 4.5 0 0 0 2.5 18"/></svg>,
   Sunset: () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 9a4 4 0 0 1 4 4"/><path d="M12 13h4"/><path d="M8 13h4"/><path d="M8 9a4 4 0 0 1 4 4"/><path d="M16 13h4"/><path d="M4 13h4"/><path d="M2 17h20"/><path d="M2 21h20"/></svg>,
@@ -55,9 +55,9 @@ const Icons = {
 const StaffBadge = ({ staff, onClick }: { staff: Employee | null; onClick: () => void }) => {
   if (!staff) return null;
   return (
-    <button onClick={onClick} className={`max-w-full text-[10px] px-2 py-1 bg-white border border-slate-200 rounded-md shadow-sm hover:border-indigo-400 hover:text-indigo-600 transition-all flex items-center gap-1.5 ${staff.position === 'Bar' ? 'hover:bg-purple-50' : 'hover:bg-orange-50'}`}>
+    <button onClick={onClick} className={`max-w-full text-[10px] px-2 py-1.5 bg-white border border-slate-200 rounded-md shadow-sm hover:border-indigo-400 hover:text-indigo-600 transition-all flex items-center gap-1.5 ${staff.position === 'Bar' ? 'hover:bg-purple-50' : 'hover:bg-orange-50'} active:scale-95`}>
       <span className={`flex-shrink-0 w-1.5 h-1.5 rounded-full ${staff.gender === 'Laki-laki' ? 'bg-blue-400' : 'bg-pink-400'}`}></span>
-      <span className="font-semibold text-slate-700 truncate max-w-[70px] sm:max-w-[100px]">{staff.name}</span>
+      <span className="font-semibold text-slate-700 truncate max-w-[60px] sm:max-w-[100px]">{staff.name}</span>
       <span className={`flex-shrink-0 ml-0.5 text-[8px] px-1 rounded-sm font-bold uppercase tracking-tighter ${staff.position === 'Bar' ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-700'}`}>{staff.position === 'Bar' ? 'B' : 'K'}</span>
     </button>
   );
@@ -348,12 +348,13 @@ const App = () => {
   return (
     <div className="min-h-screen w-full bg-slate-50 text-slate-800 font-sans pb-20 overflow-x-hidden">
       <header className="bg-white border-b sticky top-0 z-30 px-4 h-16 flex justify-between items-center shadow-sm max-w-full">
-        <div className="flex items-center gap-2 font-bold text-lg text-slate-800">
+        <div className="flex items-center gap-2 font-bold text-base sm:text-lg text-slate-800">
           <div className="bg-emerald-600 text-white p-1 rounded flex-shrink-0"><Icons.Rotate/></div> 
           <span className="truncate">ShiftMate <span className="text-emerald-600 text-xs font-normal">Rotasi Sehat</span></span>
         </div>
-        <button onClick={()=>setShowUrlInput(!showUrlInput)} className="flex-shrink-0 text-xs px-3 py-1 border rounded-full bg-slate-50 flex gap-1 items-center hover:bg-slate-100 transition-colors">
+        <button onClick={()=>setShowUrlInput(!showUrlInput)} className="flex-shrink-0 text-[10px] sm:text-xs px-3 py-1 border rounded-full bg-slate-50 flex gap-1 items-center hover:bg-slate-100 transition-colors">
           <Icons.Link/> <span className="hidden sm:inline">{scriptUrl ? "Linked" : "Connect"}</span>
+          <span className="sm:hidden">{scriptUrl ? "OK" : "Link"}</span>
         </button>
       </header>
 
@@ -361,7 +362,7 @@ const App = () => {
       
       {editModal.isOpen && editModal.staff && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-5 animate-in fade-in zoom-in-95 relative">
+          <div className="bg-white rounded-xl shadow-2xl w-[90%] sm:w-full max-w-sm p-5 animate-in fade-in zoom-in-95 relative">
             <button onClick={() => setEditModal({...editModal, isOpen: false})} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><Icons.Close/></button>
             <h3 className="font-bold text-lg mb-1 truncate pr-6">Pindahkan {editModal.staff?.name}</h3>
             <div className="text-xs text-slate-500 mb-4">Posisi saat ini: <span className="font-bold">{editModal.currentShift}</span></div>
@@ -371,7 +372,7 @@ const App = () => {
       )}
 
       <main className="max-w-5xl mx-auto px-4 py-6 w-full">
-        <div className="flex justify-center mb-6"><div className="flex bg-white rounded-full border p-1 shadow-sm overflow-x-auto max-w-full">{[1,2,3].map(s => <button key={s} onClick={() => { if(s < step) setStep(s); }} className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors ${step===s ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:bg-slate-50'}`}>{s===1 ? '1. Staff' : s===2 ? '2. Config' : '3. Jadwal'}</button>)}</div></div>
+        <div className="flex justify-center mb-6"><div className="flex bg-white rounded-full border p-1 shadow-sm overflow-x-auto max-w-full">{[1,2,3].map(s => <button key={s} onClick={() => { if(s < step) setStep(s); }} className={`px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap transition-colors ${step===s ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:bg-slate-50'}`}>{s===1 ? '1. Staff' : s===2 ? '2. Config' : '3. Jadwal'}</button>)}</div></div>
 
         {step === 1 && (
           <div className="space-y-6">
@@ -386,7 +387,7 @@ const App = () => {
             <div className="bg-white p-5 rounded-xl border shadow-sm">
                <div className="flex justify-between items-center mb-4"><h2 className="font-bold text-sm flex items-center gap-2 text-slate-700"><Icons.Users/> Staff ({employees.length})</h2><span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded-full">Target: 12-14 Org</span></div>
                <form onSubmit={handleAdd} className="flex flex-col sm:flex-row gap-2 mb-4"><input value={newName} onChange={e=>setNewName(e.target.value)} className="flex-[2] border border-slate-300 p-2.5 rounded-lg text-sm outline-indigo-500" placeholder="Nama Karyawan"/><div className="flex gap-2 flex-1"><select value={newPosition} onChange={e=>setNewPosition(e.target.value)} className="w-1/2 border border-slate-300 p-2 rounded-lg text-sm bg-white"><option>Kitchen</option><option>Bar</option></select><select value={newGender} onChange={e=>setNewGender(e.target.value)} className="w-1/2 border border-slate-300 p-2 rounded-lg text-sm bg-white"><option>Laki-laki</option><option>Perempuan</option></select></div><button className="bg-slate-900 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-slate-800 transition-colors sm:w-auto w-full">Tambah</button></form>
-               <div className="max-h-60 overflow-y-auto space-y-2 pr-1 custom-scrollbar border-t pt-4">{employees.map(e => <div key={e.id} className="flex justify-between p-3 border border-slate-100 rounded-lg bg-slate-50/50 text-sm items-center hover:bg-white hover:border-indigo-100 transition-all"><div className="flex items-center gap-3"><span className={`w-8 h-8 flex items-center justify-center text-xs font-bold text-white rounded-full ${e.gender==='Laki-laki'?'bg-blue-500':'bg-pink-500'}`}>{e.name ? e.name[0] : '?'}</span><div><span className="font-bold block text-slate-700">{e.name}</span> <span className="text-[10px] uppercase text-slate-400 font-bold tracking-wider">{e.position}</span></div></div><button onClick={()=>setEmployees(employees.filter(x=>x.id!==e.id))} className="text-slate-300 hover:text-red-500 p-2"><Icons.Trash/></button></div>)}</div>
+               <div className="max-h-60 overflow-y-auto space-y-2 pr-1 custom-scrollbar border-t pt-4">{employees.map(e => <div key={e.id} className="flex justify-between p-3 border border-slate-100 rounded-lg bg-slate-50/50 text-sm items-center hover:bg-white hover:border-indigo-100 transition-all"><div className="flex items-center gap-3"><span className={`w-8 h-8 flex items-center justify-center text-xs font-bold text-white rounded-full ${e.gender==='Laki-laki'?'bg-blue-500':'bg-pink-500'}`}>{e.name ? e.name[0] : '?'}</span><div><span className="font-bold block text-slate-700 truncate max-w-[120px]">{e.name}</span> <span className="text-[10px] uppercase text-slate-400 font-bold tracking-wider">{e.position}</span></div></div><button onClick={()=>setEmployees(employees.filter(x=>x.id!==e.id))} className="text-slate-300 hover:text-red-500 p-2"><Icons.Trash/></button></div>)}</div>
             </div>
             <button onClick={handlePrepareConfig} className="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-200 active:scale-95 transition-all">Lanjut Konfigurasi &rarr;</button>
           </div>
